@@ -10,7 +10,7 @@ type AuroraProps = {
 };
 
 export default function Aurora({
-  colorStops = ["#0D9488", "#14B8A6", "#5EEAD4"],
+  colorStops = ["#000000", "#333333", "#666666"],
   blend = 0.5,
   amplitude = 1.0,
   speed = 0.5,
@@ -183,9 +183,9 @@ export default function Aurora({
         : [0, 0, 0];
     };
 
-    const color1 = hexToRgb(colorStops[0] || "#0D9488");
-    const color2 = hexToRgb(colorStops[1] || "#14B8A6");
-    const color3 = hexToRgb(colorStops[2] || "#5EEAD4");
+    const color1 = hexToRgb(colorStops[0] || "#000000");
+    const color2 = hexToRgb(colorStops[1] || "#333333");
+    const color3 = hexToRgb(colorStops[2] || "#666666");
 
     // Set static uniforms
     gl.uniform3fv(color1Location, color1);
@@ -234,7 +234,7 @@ export default function Aurora({
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full"
-      style={{ background: "#0f172a" }}
+      style={{ background: "#ffffff" }}
     />
   );
 }

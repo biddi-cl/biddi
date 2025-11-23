@@ -48,14 +48,14 @@ export function FAQ() {
   };
 
   return (
-    <section id="faq" className="py-24 px-4">
+    <section id="faq" className="py-24 px-4 bg-white">
       <div className="max-w-3xl mx-auto">
         {/* Section header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="gradient-text">Frequently Asked Questions</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">
+            Frequently Asked Questions
           </h2>
-          <p className="text-xl text-slate-400">
+          <p className="text-xl text-neutral-500">
             Everything you need to know about Body Cart
           </p>
         </div>
@@ -65,23 +65,23 @@ export function FAQ() {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-slate-800/30 border border-slate-700/50 rounded-xl overflow-hidden hover:border-slate-600/50 transition-colors"
+              className="bg-neutral-50 border border-neutral-200 rounded-xl overflow-hidden hover:border-neutral-300 transition-colors"
             >
               {/* Question button */}
               <button
                 onClick={() => toggleFaq(index)}
                 className="w-full px-6 py-5 flex items-center justify-between text-left"
               >
-                <span className="text-lg font-medium text-white pr-4">
+                <span className="text-lg font-medium text-black pr-4">
                   {faq.question}
                 </span>
                 <span
-                  className={`shrink-0 w-8 h-8 bg-teal-500/20 rounded-lg flex items-center justify-center transition-transform duration-300 ${
+                  className={`shrink-0 w-8 h-8 bg-neutral-200 rounded-lg flex items-center justify-center transition-transform duration-300 ${
                     openIndex === index ? "rotate-180" : ""
                   }`}
                 >
                   <svg
-                    className="w-4 h-4 text-teal-400"
+                    className="w-4 h-4 text-black"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -103,7 +103,7 @@ export function FAQ() {
                 }`}
               >
                 <div className="px-6 pb-5 pt-0">
-                  <p className="text-slate-400 leading-relaxed">{faq.answer}</p>
+                  <p className="text-neutral-500 leading-relaxed">{faq.answer}</p>
                 </div>
               </div>
             </div>
@@ -112,10 +112,10 @@ export function FAQ() {
 
         {/* More questions CTA */}
         <div className="mt-12 text-center">
-          <p className="text-slate-400 mb-4">Still have questions?</p>
+          <p className="text-neutral-500 mb-4">Still have questions?</p>
           <a
             href="mailto:support@bodycart.app"
-            className="inline-flex items-center gap-2 text-teal-400 hover:text-teal-300 transition-colors"
+            className="inline-flex items-center gap-2 text-black hover:text-neutral-600 transition-colors"
           >
             <svg
               className="w-5 h-5"

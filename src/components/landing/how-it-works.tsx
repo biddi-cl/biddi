@@ -57,14 +57,14 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-24 px-4">
+    <section id="how-it-works" className="py-24 px-4 bg-white">
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="gradient-text">How It Works</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">
+            How It Works
           </h2>
-          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+          <p className="text-xl text-neutral-500 max-w-2xl mx-auto">
             Get protected in under a minute with our simple 3-step setup
           </p>
         </div>
@@ -72,35 +72,35 @@ export function HowItWorks() {
         {/* Steps */}
         <div className="relative">
           {/* Connection line */}
-          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-teal-500/30 to-transparent -translate-y-1/2" />
+          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-px bg-neutral-200 -translate-y-1/2" />
 
           <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
             {steps.map((step, index) => (
               <div key={index} className="relative">
                 {/* Card */}
-                <div className="relative bg-slate-800/30 border border-slate-700/50 rounded-2xl p-8 text-center hover:border-teal-500/30 transition-colors">
+                <div className="relative bg-neutral-50 border border-neutral-200 rounded-2xl p-8 text-center hover:border-neutral-300 transition-colors">
                   {/* Step number badge */}
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-gradient-to-r from-teal-500 to-teal-600 rounded-full text-white font-bold text-sm">
+                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-black rounded-full text-white font-bold text-sm">
                     Step {step.number}
                   </div>
 
                   {/* Icon */}
-                  <div className="w-20 h-20 bg-gradient-to-br from-teal-500/20 to-teal-600/10 rounded-2xl flex items-center justify-center text-teal-400 mx-auto mt-4 mb-6">
+                  <div className="w-20 h-20 bg-neutral-100 rounded-2xl flex items-center justify-center text-black mx-auto mt-4 mb-6">
                     {step.icon}
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-2xl font-semibold text-white mb-3">
+                  <h3 className="text-2xl font-semibold text-black mb-3">
                     {step.title}
                   </h3>
-                  <p className="text-slate-400 leading-relaxed">{step.description}</p>
+                  <p className="text-neutral-500 leading-relaxed">{step.description}</p>
                 </div>
 
                 {/* Arrow connector for mobile */}
                 {index < steps.length - 1 && (
                   <div className="lg:hidden flex justify-center my-4">
                     <svg
-                      className="w-6 h-6 text-teal-500"
+                      className="w-6 h-6 text-neutral-300"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"

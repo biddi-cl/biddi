@@ -93,14 +93,14 @@ const features = [
 
 export function Features() {
   return (
-    <section id="features" className="py-24 px-4 bg-slate-900/50">
+    <section id="features" className="py-24 px-4 bg-neutral-50">
       <div className="max-w-6xl mx-auto">
         {/* Section header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="gradient-text">Powerful Protection</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">
+            Powerful Protection
           </h2>
-          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+          <p className="text-xl text-neutral-500 max-w-2xl mx-auto">
             Body Cart uses cutting-edge AI to keep you safe from online threats while
             you shop
           </p>
@@ -111,16 +111,16 @@ export function Features() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="group p-6 bg-slate-800/50 border border-slate-700/50 rounded-2xl hover:border-teal-500/50 transition-all duration-300 hover:bg-slate-800/80"
+              className="group p-6 bg-white border border-neutral-200 rounded-2xl hover:border-neutral-300 transition-all duration-300 hover:shadow-sm"
             >
               {/* Icon */}
-              <div className="w-14 h-14 bg-gradient-to-br from-teal-500/20 to-teal-600/20 rounded-xl flex items-center justify-center text-teal-400 mb-4 group-hover:from-teal-500/30 group-hover:to-teal-600/30 transition-colors">
+              <div className="w-14 h-14 bg-neutral-100 rounded-xl flex items-center justify-center text-black mb-4 group-hover:bg-neutral-200 transition-colors">
                 {feature.icon}
               </div>
 
               {/* Content */}
-              <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
-              <p className="text-slate-400 leading-relaxed">{feature.description}</p>
+              <h3 className="text-xl font-semibold text-black mb-2">{feature.title}</h3>
+              <p className="text-neutral-500 leading-relaxed">{feature.description}</p>
             </div>
           ))}
         </div>
