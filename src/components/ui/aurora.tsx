@@ -10,7 +10,7 @@ type AuroraProps = {
 };
 
 export default function Aurora({
-  colorStops = ["#0D9488", "#14B8A6", "#5EEAD4"],
+  colorStops = ["#000000", "#333333", "#666666"],
   blend = 0.5,
   amplitude = 1.0,
   speed = 0.5,
@@ -118,7 +118,10 @@ export default function Aurora({
     `;
 
     // Compile shader helper
-    const compileShader = (source: string, type: number): WebGLShader | null => {
+    const compileShader = (
+      source: string,
+      type: number,
+    ): WebGLShader | null => {
       const shader = gl.createShader(type);
       if (!shader) return null;
       gl.shaderSource(shader, source);
@@ -132,7 +135,10 @@ export default function Aurora({
     };
 
     const vertexShader = compileShader(vertexShaderSource, gl.VERTEX_SHADER);
-    const fragmentShader = compileShader(fragmentShaderSource, gl.FRAGMENT_SHADER);
+    const fragmentShader = compileShader(
+      fragmentShaderSource,
+      gl.FRAGMENT_SHADER,
+    );
     if (!vertexShader || !fragmentShader) return;
 
     // Create program
@@ -155,7 +161,7 @@ export default function Aurora({
     gl.bufferData(
       gl.ARRAY_BUFFER,
       new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]),
-      gl.STATIC_DRAW
+      gl.STATIC_DRAW,
     );
 
     const positionLocation = gl.getAttribLocation(program, "a_position");
@@ -183,9 +189,9 @@ export default function Aurora({
         : [0, 0, 0];
     };
 
-    const color1 = hexToRgb(colorStops[0] || "#0D9488");
-    const color2 = hexToRgb(colorStops[1] || "#14B8A6");
-    const color3 = hexToRgb(colorStops[2] || "#5EEAD4");
+    const color1 = hexToRgb(colorStops[0] || "#000000");
+    const color2 = hexToRgb(colorStops[1] || "#333333");
+    const color3 = hexToRgb(colorStops[2] || "#666666");
 
     // Set static uniforms
     gl.uniform3fv(color1Location, color1);
@@ -205,14 +211,21 @@ export default function Aurora({
       // Handle resize
       const displayWidth = currentCanvas.clientWidth;
       const displayHeight = currentCanvas.clientHeight;
-      if (currentCanvas.width !== displayWidth || currentCanvas.height !== displayHeight) {
+      if (
+        currentCanvas.width !== displayWidth ||
+        currentCanvas.height !== displayHeight
+      ) {
         currentCanvas.width = displayWidth;
         currentCanvas.height = displayHeight;
         currentGl.viewport(0, 0, currentCanvas.width, currentCanvas.height);
       }
 
       const time = ((Date.now() - startTime) / 1000) * speed;
-      currentGl.uniform2f(resolutionLocation, currentCanvas.width, currentCanvas.height);
+      currentGl.uniform2f(
+        resolutionLocation,
+        currentCanvas.width,
+        currentCanvas.height,
+      );
       currentGl.uniform1f(timeLocation, time);
       currentGl.drawArrays(currentGl.TRIANGLES, 0, 6);
       animationRef.current = requestAnimationFrame(render);
@@ -234,7 +247,7 @@ export default function Aurora({
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full"
-      style={{ background: "#0f172a" }}
+      style={{ background: "#ffffff" }}
     />
   );
 }

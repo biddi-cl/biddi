@@ -1,14 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { gsap } from "gsap";
 import ColorBends from "@/components/ui/color-bends";
 
 export function Hero() {
   const [showInstructions, setShowInstructions] = useState(false);
   const [copied, setCopied] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const content = contentRef.current;
+    if (!content) return;
+
+    const elements = content.children;
+
+    gsap.set(elements, {
+      y: 40,
+      opacity: 0,
+    });
+
+    gsap.to(elements, {
+      y: 0,
+      opacity: 1,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: "power3.out",
+      delay: 0.3,
+    });
+  }, []);
 
   const handleDownload = () => {
-    // Show instructions immediately
     setShowInstructions(true);
   };
 
@@ -18,7 +40,6 @@ export function Hero() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback for older browsers
       const textArea = document.createElement("textarea");
       textArea.value = "chrome://extensions/";
       document.body.appendChild(textArea);
@@ -32,85 +53,54 @@ export function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 bg-slate-900">
+      {/* Full-screen ColorBends background */}
       <ColorBends
+        className="absolute! inset-0!"
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          width: "100%",
+          height: "100%",
+          background: "#000",
+        }}
         colors={["#ff5c7a", "#8a5cff", "#00ffd1"]}
         rotation={30}
         speed={0.3}
-        scale={1.2}
-        frequency={1.4}
+        scale={0.5}
+        frequency={0.8}
         warpStrength={1.2}
         mouseInfluence={0.8}
         parallax={0.6}
         noise={0.08}
-        transparent
+        transparent={false}
       />
-        {/* Overlay for content readability */}
-        <div className="absolute inset-0 bg-slate-900/40" />
-      </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
-        {/* Shield icon */}
-        <div className="mb-8 flex justify-center">
-          <div className="relative">
-            <div className="w-24 h-24 bg-gradient-to-br from-teal-400 to-teal-600 rounded-2xl rotate-45 flex items-center justify-center teal-glow">
-              <svg
-                className="-rotate-45 w-12 h-12 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                />
-              </svg>
-            </div>
-            {/* Shopping cart badge */}
-            <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center border-2 border-teal-400">
-              <svg
-                className="w-5 h-5 text-teal-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                />
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        {/* Brand name */}
-        <h1 className="text-6xl md:text-7xl font-bold mb-4">
-          <span className="gradient-text">Body Cart</span>
+      <div
+        ref={contentRef}
+        className="relative z-10 text-center px-6 max-w-3xl mx-auto"
+      >
+        <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight mb-6 font-heading">
+          BodyCart
         </h1>
 
-        {/* Tagline */}
-        <p className="text-xl md:text-2xl text-slate-300 mb-6">
-          Your Digital Bodyguard for Online Shopping
+        <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-6 font-heading">
+          Tu guardaespaldas digital
+        </h2>
+
+        <p className="text-lg md:text-xl text-white/80 mb-12 max-w-xl mx-auto font-light">
+          Protección con IA contra estafas y phishing mientras compras en línea.
         </p>
 
-        {/* Description */}
-        <p className="text-lg text-slate-400 max-w-2xl mx-auto mb-10">
-          AI-powered Chrome extension that protects you from Facebook Marketplace
-          scams, phishing attempts, and suspicious websites in real-time.
-        </p>
-
-        {/* Download button */}
         <button
           onClick={handleDownload}
-          className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-teal-500 to-teal-600 text-white font-semibold text-lg rounded-xl teal-glow transition-all duration-300 hover:from-teal-400 hover:to-teal-500 hover:scale-105"
+          className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-medium rounded-full hover:bg-white/90 transition-all duration-200"
         >
           <svg
-            className="w-6 h-6 transition-transform group-hover:-translate-y-1"
+            className="w-5 h-5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -122,193 +112,154 @@ export function Hero() {
               d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
             />
           </svg>
-          Download Extension
-          <span className="text-teal-200 text-sm font-normal">(Free)</span>
+          Descargar Extensión
         </button>
 
-        {/* Trust indicators */}
-        <div className="mt-10 flex flex-wrap justify-center gap-6 text-sm text-slate-400">
-          <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 text-teal-400" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                clipRule="evenodd"
-              />
-            </svg>
-            100% Free
-          </div>
-          <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 text-teal-400" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                clipRule="evenodd"
-              />
-            </svg>
-            No Data Collection
-          </div>
-          <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 text-teal-400" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                clipRule="evenodd"
-              />
-            </svg>
-            AI-Powered Protection
-          </div>
-        </div>
-
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <svg
-            className="w-6 h-6 text-teal-400"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 14l-7 7m0 0l-7-7m7 7V3"
-            />
-          </svg>
+        <div className="mt-16 flex flex-wrap justify-center gap-8 text-sm text-white/60">
+          <span>Gratis</span>
+          <span>Sin recolección de datos</span>
+          <span>Potenciado por IA</span>
         </div>
       </div>
 
       {/* Installation Instructions Modal */}
       {showInstructions && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-          <div className="bg-slate-800 border border-teal-500/30 rounded-2xl p-8 max-w-lg w-full shadow-2xl relative">
-            {/* Close button */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl p-8 max-w-lg w-full shadow-2xl relative">
             <button
               onClick={() => setShowInstructions(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors"
+              className="absolute top-4 right-4 text-neutral-400 hover:text-black transition-colors"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
 
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-teal-500/20 rounded-xl flex items-center justify-center">
-                <svg
-                  className="w-6 h-6 text-teal-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                  />
-                </svg>
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-white">Install Body Cart</h3>
-                <p className="text-slate-400 text-sm">Follow these steps to get protected</p>
-              </div>
-            </div>
+            <h3 className="text-2xl font-semibold text-black mb-2">
+              Instalar BodyCart
+            </h3>
+            <p className="text-neutral-500 mb-8">
+              Sigue estos pasos para estar protegido
+            </p>
 
-            <div className="space-y-4 mb-6">
-              {/* Step 1: Download */}
-              <div className="flex gap-4 p-3 bg-teal-500/10 border border-teal-500/30 rounded-xl">
-                <div className="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center text-white font-semibold text-sm shrink-0">
+            <div className="space-y-6">
+              {/* Step 1 */}
+              <div className="flex gap-4">
+                <div className="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white text-sm font-medium shrink-0">
                   1
                 </div>
                 <div className="flex-1">
-                  <p className="text-white font-medium mb-2">Download the Extension</p>
+                  <p className="text-black font-medium mb-2">
+                    Descarga la extensión
+                  </p>
                   <a
                     href="/extension.zip"
                     download="body-cart-extension.zip"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-teal-500 hover:bg-teal-400 text-white text-sm font-medium rounded-lg transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-black text-white text-sm font-medium rounded-lg hover:bg-neutral-800 transition-colors"
                   >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                      />
                     </svg>
-                    Download ZIP
+                    Descargar ZIP
                   </a>
                 </div>
               </div>
 
-              {/* Step 2: Extract */}
+              {/* Step 2 */}
               <div className="flex gap-4">
-                <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center text-white font-semibold text-sm shrink-0">
+                <div className="w-8 h-8 bg-neutral-200 rounded-full flex items-center justify-center text-black text-sm font-medium shrink-0">
                   2
                 </div>
                 <div>
-                  <p className="text-white font-medium">Extract the ZIP file</p>
-                  <p className="text-slate-400 text-sm">Unzip the downloaded file to a folder on your computer</p>
+                  <p className="text-black font-medium">
+                    Extrae el archivo ZIP
+                  </p>
+                  <p className="text-neutral-500 text-sm">
+                    Descomprime en una carpeta de tu computador
+                  </p>
                 </div>
               </div>
 
-              {/* Step 3: Open Chrome Extensions */}
-              <div className="flex gap-4 p-3 bg-slate-700/50 rounded-xl">
-                <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center text-white font-semibold text-sm shrink-0">
+              {/* Step 3 */}
+              <div className="flex gap-4">
+                <div className="w-8 h-8 bg-neutral-200 rounded-full flex items-center justify-center text-black text-sm font-medium shrink-0">
                   3
                 </div>
                 <div className="flex-1">
-                  <p className="text-white font-medium mb-2">Open Chrome Extensions</p>
-                  <p className="text-slate-400 text-sm mb-2">Copy and paste this URL in your browser:</p>
+                  <p className="text-black font-medium mb-2">
+                    Abre las Extensiones de Chrome
+                  </p>
                   <div className="flex items-center gap-2">
-                    <code className="flex-1 text-teal-300 bg-slate-900 px-3 py-2 rounded-lg text-sm font-mono">
+                    <code className="flex-1 text-black bg-neutral-100 px-3 py-2 rounded-lg text-sm font-mono">
                       chrome://extensions/
                     </code>
                     <button
                       onClick={copyExtensionUrl}
                       className={`px-3 py-2 rounded-lg text-sm font-medium transition-all ${
                         copied
-                          ? "bg-green-500 text-white"
-                          : "bg-teal-500 hover:bg-teal-400 text-white"
+                          ? "bg-black text-white"
+                          : "bg-neutral-100 text-black hover:bg-neutral-200"
                       }`}
                     >
-                      {copied ? (
-                        <span className="flex items-center gap-1">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                          Copied!
-                        </span>
-                      ) : (
-                        "Copy"
-                      )}
+                      {copied ? "Copiado" : "Copiar"}
                     </button>
                   </div>
                 </div>
               </div>
 
-              {/* Step 4: Enable Developer Mode */}
+              {/* Step 4 */}
               <div className="flex gap-4">
-                <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center text-white font-semibold text-sm shrink-0">
+                <div className="w-8 h-8 bg-neutral-200 rounded-full flex items-center justify-center text-black text-sm font-medium shrink-0">
                   4
                 </div>
                 <div>
-                  <p className="text-white font-medium">Enable Developer Mode</p>
-                  <p className="text-slate-400 text-sm">Toggle the switch in the top-right corner of the extensions page</p>
+                  <p className="text-black font-medium">
+                    Activa el Modo Desarrollador
+                  </p>
+                  <p className="text-neutral-500 text-sm">
+                    Activa el interruptor en la esquina superior derecha
+                  </p>
                 </div>
               </div>
 
-              {/* Step 5: Load Extension */}
+              {/* Step 5 */}
               <div className="flex gap-4">
-                <div className="w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center text-white font-semibold text-sm shrink-0">
+                <div className="w-8 h-8 bg-neutral-200 rounded-full flex items-center justify-center text-black text-sm font-medium shrink-0">
                   5
                 </div>
                 <div>
-                  <p className="text-white font-medium">Load Unpacked Extension</p>
-                  <p className="text-slate-400 text-sm">
-                    Click &quot;Load unpacked&quot; and select the extracted folder
+                  <p className="text-black font-medium">Cargar descomprimida</p>
+                  <p className="text-neutral-500 text-sm">
+                    Haz clic en &quot;Cargar descomprimida&quot; y selecciona la
+                    carpeta extraída
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-700">
-              <p className="text-center text-slate-400 text-sm">
-                That&apos;s it! Body Cart is now protecting you while you browse.
+            <div className="mt-8 pt-6 border-t border-neutral-200">
+              <p className="text-center text-neutral-500 text-sm">
+                ¡Listo! BodyCart ahora te está protegiendo.
               </p>
             </div>
           </div>
