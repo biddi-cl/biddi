@@ -1,6 +1,12 @@
 "use client";
 
 import { ScrollReveal, StaggerReveal } from "@/components/ui/scroll-reveal";
+import PixelCard from "@/components/PixelCard";
+import {
+  DownloadSimple,
+  GearSix,
+  ShieldCheckered,
+} from "@phosphor-icons/react";
 
 const steps = [
   {
@@ -8,54 +14,21 @@ const steps = [
     title: "Descarga la Extensión",
     description:
       "Haz clic en el botón de descarga para obtener el archivo ZIP de Body Cart. Es completamente gratis sin costos ocultos.",
-    icon: (
-      <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={1.5}
-          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-        />
-      </svg>
-    ),
+    icon: <DownloadSimple size={40} weight="bold" />,
   },
   {
     number: "02",
     title: "Instala en Chrome",
     description:
       "Extrae el ZIP, ve a chrome://extensions/, activa el Modo Desarrollador y carga la carpeta descomprimida.",
-    icon: (
-      <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={1.5}
-          d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-        />
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={1.5}
-          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-        />
-      </svg>
-    ),
+    icon: <GearSix size={40} weight="bold" />,
   },
   {
     number: "03",
     title: "Navega Seguro",
     description:
       "¡Eso es todo! Body Cart ahora funciona en segundo plano, analizando páginas y alertándote de amenazas potenciales automáticamente.",
-    icon: (
-      <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={1.5}
-          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-        />
-      </svg>
-    ),
+    icon: <ShieldCheckered size={40} weight="bold" />,
   },
 ];
 
@@ -80,29 +53,33 @@ export function HowItWorks() {
         {/* Steps */}
         <div className="relative">
           {/* Connection line */}
-          <div className="hidden lg:block absolute top-1/2 left-0 right-0 h-px bg-white/20 -translate-y-1/2" />
 
           <StaggerReveal className="grid lg:grid-cols-3 gap-8 lg:gap-12" stagger={0.15}>
             {steps.map((step, index) => (
-              <div key={index} className="relative">
+              <div key={index} className="relative pt-4">
                 {/* Card */}
-                <div className="relative bg-white/5 border border-white/10 rounded-2xl p-8 text-center hover:border-white/20 transition-colors">
-                  {/* Step number badge */}
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-white rounded-full text-black font-bold text-sm">
-                    Paso {step.number}
-                  </div>
+                <PixelCard
+                  variant="dark"
+                  className="bg-white/5 border-white/10 hover:border-white/20"
+                >
+                  <div className="p-8 text-center">
+                    {/* Step number badge */}
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 bg-white rounded-full text-black font-bold text-sm z-20">
+                      Paso {step.number}
+                    </div>
 
-                  {/* Icon */}
-                  <div className="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center text-white mx-auto mt-4 mb-6">
-                    {step.icon}
-                  </div>
+                    {/* Icon */}
+                    <div className="w-20 h-20 bg-white/10 rounded-2xl flex items-center justify-center text-white mx-auto mt-2 mb-6">
+                      {step.icon}
+                    </div>
 
-                  {/* Content */}
-                  <h3 className="text-2xl font-semibold text-white mb-3 font-heading">
-                    {step.title}
-                  </h3>
-                  <p className="text-white/60 leading-relaxed">{step.description}</p>
-                </div>
+                    {/* Content */}
+                    <h3 className="text-2xl font-semibold text-white mb-3 font-heading">
+                      {step.title}
+                    </h3>
+                    <p className="text-white/60 leading-relaxed">{step.description}</p>
+                  </div>
+                </PixelCard>
 
                 {/* Arrow connector for mobile */}
                 {index < steps.length - 1 && (
